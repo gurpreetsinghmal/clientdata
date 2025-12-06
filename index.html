@@ -181,13 +181,12 @@
         );
 
   
-        // Populate table header
-    $("#tableHeader").empty();
-    $("#filters").empty();
-    cols.forEach(col => {
-        $("#tableHeader").append(`<th>${col}</th>`);
-        $("#filters").append(`<th><input type="text" placeholder="Search ${col}" /></th>`);
-    });
+
+   // Populate table header and add input below each column
+$("#tableHeader").empty();
+cols.forEach(col => {
+    $("#tableHeader").append(`<th>${col}<br><input type="text" placeholder="Search ${col}" /></th>`);
+});
 
         // Initialize DataTable
         $("#googleTable").DataTable({
@@ -236,17 +235,15 @@
           dom: "<'row mb-3'<'col-sm-4 d-flex align-items-center'l><'col-sm-4 d-flex align-items-center justify-content-center'B><'col-sm-4 d-flex align-items-center justify-content-end'f>>tr<'row mt-3'<'col-sm-5'i><'col-sm-7'p>>",
           responsive: true,
         });
-         // Apply column search
-    table.columns().every(function(i){
-        $('input', this.header()).on('keyup change clear', function(){
-            if(table.column(i).search() !== this.value){
-                table
-                    .column(i)
-                    .search(this.value)
-                    .draw();
-            }
-        });
-    });
+              // Apply column search
+          table.columns().every(function () {
+              const that = this;
+              $('input', this.header()).on('keyup change clear', function () {
+                  if (that.search() !== this.value) {
+                      that.search(this.value).draw();
+                  }
+              });
+          });
       });
     </script>
   </body>
