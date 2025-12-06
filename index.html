@@ -140,7 +140,6 @@
         <table id="googleTable" class="table table-hover" width="100%">
           <thead>
             <tr id="tableHeader"></tr>
-            <tr id="filters"></tr>
           </thead>
           <tbody></tbody>
         </table>
@@ -180,13 +179,9 @@
           r.c.map((cell) => (cell ? cell.v : ""))
         );
 
-  
-
-   // Populate table header and add input below each column
-$("#tableHeader").empty();
-cols.forEach(col => {
-    $("#tableHeader").append(`<th>${col}<br><input type="text" placeholder="Search ${col}" /></th>`);
-});
+        // Populate table header
+        $("#tableHeader").empty();
+        cols.forEach((col) => $("#tableHeader").append(`<th>${col}</th>`));
 
         // Initialize DataTable
         $("#googleTable").DataTable({
@@ -235,15 +230,6 @@ cols.forEach(col => {
           dom: "<'row mb-3'<'col-sm-4 d-flex align-items-center'l><'col-sm-4 d-flex align-items-center justify-content-center'B><'col-sm-4 d-flex align-items-center justify-content-end'f>>tr<'row mt-3'<'col-sm-5'i><'col-sm-7'p>>",
           responsive: true,
         });
-              // Apply column search
-          table.columns().every(function () {
-              const that = this;
-              $('input', this.header()).on('keyup change clear', function () {
-                  if (that.search() !== this.value) {
-                      that.search(this.value).draw();
-                  }
-              });
-          });
       });
     </script>
   </body>
