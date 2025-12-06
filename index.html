@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Google-Style DataTable from Google Sheet -CLient Data</title>
+    <title>Google-Style DataTable from Google Sheet</title>
 
     <!-- Bootstrap 5 -->
     <link
@@ -161,17 +161,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 
     <script>
-      const sheetID = "1QS9wTP1CdrTspINPeGG56s_VOcB0qMvA19HQpGwFsyg"; // Replace with your Sheet ID
+      const sheetID = "1QS9wTP1CdrTspINPeGG56s_VOcB0qMvA19HQpGwFsyg";
       const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
 
-      $.getJSON(url, function (data) {
-        const jsonData = JSON.parse(data.substring(47).slice(0, -2));
+      $.get(url, function (data) {
+        // Remove Google JSON wrapper
+        const jsonData = JSON.parse(
+          data.match(
+            /google\.visualization\.Query\.setResponse\(([\s\S\w]+)\)/
+          )[1]
+        );
+
+        // Extract columns and rows
         const cols = jsonData.table.cols.map((c) => c.label);
         const rows = jsonData.table.rows.map((r) =>
           r.c.map((cell) => (cell ? cell.v : ""))
         );
 
         // Populate table header
+        $("#tableHeader").empty();
         cols.forEach((col) => $("#tableHeader").append(`<th>${col}</th>`));
 
         // Initialize DataTable
