@@ -208,7 +208,7 @@
       const row = table.row($(this).closest("tr"));
       const rowData = row.data();
 
-      const followupValue = rowData[rowData.length - 2]; // last second
+      const followupValue = rowData[rowData.length - 3]; // last second
 
       rowData[rowData.length - 2] =
         `<input type="text" class="form-control form-control-sm" value="${followupValue}" />`;
