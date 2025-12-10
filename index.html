@@ -250,11 +250,9 @@
       const row = table.row($(this).closest("tr"));
       const rowData = row.data();
 
-      // get current followup text
-    const currentFollowup = tr.find("td")
-        .eq(tr.find("td").length - 2)
-        .text()
-        .trim();
+    // Read the REAL follow-up value from the table cell
+    const currentFollowup = tr.find("td").eq(tr.find("td").length - 2).text().trim();
+
 
     // replace cell with textarea
     rowData[rowData.length - 2] =
