@@ -253,7 +253,7 @@
      
 
    // Read current followup (second last column)
-    const currentFollowup = rowData[rowData.length - 3]
+    const currentFollowup = rowData[rowData.length - 3]??"";
 
     rowData[rowData.length - 2] =
         `<textarea class="form-control form-control-sm" rows="3">${currentFollowup}</textarea>`;
