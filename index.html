@@ -250,10 +250,17 @@
       const row = table.row($(this).closest("tr"));
       const rowData = row.data();
 
-      const followupValue = rowData[rowData.length - 3]??""; // last second
+      // get current followup text
+    const currentFollowup = tr.find("td")
+        .eq(tr.find("td").length - 2)
+        .text()
+        .trim();
 
-      rowData[rowData.length - 2] =
-        `<input type="text" class="form-control form-control-sm" required value="${followupValue}" />`;
+    // replace cell with textarea
+    rowData[rowData.length - 2] =
+        `<textarea class="form-control form-control-sm" 
+                   rows="3" 
+                   required>${currentFollowup}</textarea>`;
 
       rowData[rowData.length - 1] =
         `<button class="btn btn-sm btn-secondary cancelBtn"><i class="bi bi-x-circle-fill"></i></button>
