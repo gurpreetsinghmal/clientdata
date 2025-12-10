@@ -262,6 +262,10 @@
               function (res) {
             
                 alert("Saved to Google Sheet");
+                // FORCE REFRESH AFTER SAVE
+            setTimeout(() => {
+                location.reload();
+            }, 300); // small delay so UI update is seen
               }
             );
 
