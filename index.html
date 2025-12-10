@@ -226,7 +226,7 @@
     $("#googleTable tbody").on("click", ".cancelBtn", function () {
       const row = table.row($(this).closest("tr"));
       const rowData = row.data();
-
+      
       const value = $(rowData[rowData.length - 2]).val() || "";
 
       rowData[rowData.length - 2] = value;
@@ -243,7 +243,7 @@
     $("#googleTable tbody").on("click", ".saveBtn", function () {
       const row = table.row($(this).closest("tr"));
       const rowData = row.data();
-
+console.log(rowData);
       const id = rowData[0]; // ID column
       const newFollowup = $(rowData[rowData.length - 2]).val();
 
