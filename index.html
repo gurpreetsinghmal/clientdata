@@ -253,10 +253,7 @@
       console.log(rowData);
 
    // Read current followup (second last column)
-    const currentFollowup = tr.find("td")
-        .eq(tr.find("td").length - 2)
-        .text()
-        .trim();
+    const currentFollowup = rowData[rowData.length - 3]
 
     rowData[rowData.length - 2] =
         `<textarea class="form-control form-control-sm" rows="3">${currentFollowup}</textarea>`;
