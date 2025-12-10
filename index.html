@@ -247,8 +247,9 @@
     // EDIT BUTTON CLICK
     // -----------------------------
     $("#googleTable tbody").on("click", ".editBtn", function () {
-      const row = table.row($(this).closest("tr"));
-      const rowData = row.data();
+    const tr = $(this).closest("tr");
+    const row = table.row(tr);
+    const rowData = row.data();
 
    // Read current followup (second last column)
     const currentFollowup = tr.find("td")
