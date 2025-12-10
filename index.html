@@ -250,6 +250,7 @@
     const tr = $(this).closest("tr");
     const row = table.row(tr);
     const rowData = row.data();
+      console.log(rowData);
 
    // Read current followup (second last column)
     const currentFollowup = tr.find("td")
@@ -300,7 +301,7 @@
 
 
     // CHECK IF EMPTY
-    if (newFollowup === "" || newFollowup.length === 0) {
+    if (newFollowup === "") {
         alert("Please enter follow-up before saving!");
         return;  // STOP save
     }
