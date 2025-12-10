@@ -162,75 +162,105 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 
     <script>
-      const sheetID = "1QS9wTP1CdrTspINPeGG56s_VOcB0qMvA19HQpGwFsyg";
-      const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
+  const sheetID = "1QS9wTP1CdrTspINPeGG56s_VOcB0qMvA19HQpGwFsyg";
+  const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
 
-      $.get(url, function (data) {
-        // Remove Google JSON wrapper
-        const jsonData = JSON.parse(
-          data.match(
-            /google\.visualization\.Query\.setResponse\(([\s\S\w]+)\)/
-          )[1]
-        );
+  $.get(url, function (data) {
+    // Remove Google JSON wrapper
+    const jsonData = JSON.parse(
+      data.match(/google\.visualization\.Query\.setResponse\(([\s\S\w]+)\)/)[1]
+    );
 
-        // Extract columns and rows
-        const cols = jsonData.table.cols.map((c) => c.label);
-        const rows = jsonData.table.rows.map((r) =>
-          r.c.map((cell) => (cell ? cell.v : ""))
-        );
+    // Extract columns & rows
+    const cols = jsonData.table.cols.map((c) => c.label);
+    const rows = jsonData.table.rows.map((r) =>
+      r.c.map((cell) => (cell ? cell.v : ""))
+    );
 
-        // Populate table header
-        $("#tableHeader").empty();
-        cols.forEach((col) => $("#tableHeader").append(`<th>${col}</th>`));
+    // Add Followup + Action buttons
+    cols.push("Followup", "Actions");
 
-        // Initialize DataTable
-        $("#googleTable").DataTable({
-          data: rows,
-          columns: cols.map((c) => ({ title: c })),
-          pageLength: 10,
-          lengthChange: true,
-          buttons: [
-            {
-              extend: "copy",
-              className: "btn-icon btn-copy",
-              text: '<i class="bi bi-clipboard"></i>',
-              titleAttr: "Copy",
-            },
-            {
-              extend: "csv",
-              className: "btn-icon btn-csv",
-              text: '<i class="bi bi-file-earmark-text"></i>',
-              titleAttr: "CSV",
-            },
-            {
-              extend: "excel",
-              className: "btn-icon btn-excel",
-              text: '<i class="bi bi-file-earmark-excel"></i>',
-              titleAttr: "Excel",
-            },
-            {
-              extend: "pdf",
-              className: "btn-icon btn-pdf",
-              text: '<i class="bi bi-file-earmark-pdf"></i>',
-              titleAttr: "PDF",
-            },
-            {
-              extend: "print",
-              className: "btn-icon btn-print",
-              text: '<i class="bi bi-printer"></i>',
-              titleAttr: "Print",
-            },
-            {
-              extend: "colvis",
-              className: "btn-icon btn-colvis",
-              text: '<i class="bi bi-eye"></i>',
-              titleAttr: "Column Visibility",
-            },
-          ],
-          dom: "<'row mb-3'<'col-sm-4 d-flex align-items-center'l><'col-sm-4 d-flex align-items-center justify-content-center'B><'col-sm-4 d-flex align-items-center justify-content-end'f>>tr<'row mt-3'<'col-sm-5'i><'col-sm-7'p>>",
-          responsive: true,
-        });
-      });
-    </script>
+    const modifiedRows = rows.map((r) => {
+      return [
+        ...r,
+        "", // followup blank initially
+        `<button class="btn btn-sm btn-warning editBtn">Edit</button>
+         <button class="btn btn-sm btn-success saveBtn d-none">Save</button>`
+      ];
+    });
+
+    // Build header
+    $("#tableHeader").empty();
+    cols.forEach((col) => $("#tableHeader").append(`<th>${col}</th>`));
+
+    // Initialize DataTable
+    const table = $("#googleTable").DataTable({
+      data: modifiedRows,
+      columns: cols.map((c) => ({ title: c })),
+      pageLength: 10,
+      responsive: true,
+    });
+
+    // -----------------------------
+    // EDIT BUTTON CLICK
+    // -----------------------------
+    $("#googleTable tbody").on("click", ".editBtn", function () {
+      const row = table.row($(this).closest("tr"));
+      const rowData = row.data();
+
+      const followupValue = rowData[rowData.length - 2]; // last second
+
+      rowData[rowData.length - 2] =
+        `<input type="text" class="form-control form-control-sm" value="${followupValue}" />`;
+
+      rowData[rowData.length - 1] =
+        `<button class="btn btn-sm btn-secondary cancelBtn">Cancel</button>
+         <button class="btn btn-sm btn-success saveBtn">Save</button>`;
+
+      row.data(rowData).draw(false);
+    });
+
+    // -----------------------------
+    // CANCEL BUTTON
+    // -----------------------------
+    $("#googleTable tbody").on("click", ".cancelBtn", function () {
+      const row = table.row($(this).closest("tr"));
+      const rowData = row.data();
+
+      const value = $(rowData[rowData.length - 2]).val() || "";
+
+      rowData[rowData.length - 2] = value;
+      rowData[rowData.length - 1] =
+        `<button class="btn btn-sm btn-warning editBtn">Edit</button>
+         <button class="btn btn-sm btn-success saveBtn d-none">Save</button>`;
+
+      row.data(rowData).draw(false);
+    });
+
+    // -----------------------------
+    // SAVE BUTTON → also send to Google Sheets
+    // -----------------------------
+    $("#googleTable tbody").on("click", ".saveBtn", function () {
+      const row = table.row($(this).closest("tr"));
+      const rowData = row.data();
+
+      const id = rowData[0]; // ID column
+      const newFollowup = $(rowData[rowData.length - 2]).val();
+
+      // TODO: Google Sheet save API here
+      // $.post("YOUR_WEB_APP_URL", { id: id, followup: newFollowup });
+
+      rowData[rowData.length - 2] = newFollowup;
+      rowData[rowData.length - 1] =
+        `<button class="btn btn-sm btn-warning editBtn">Edit</button>
+         <button class="btn btn-sm btn-success saveBtn d-none">Save</button>`;
+
+      row.data(rowData).draw(false);
+
+      alert("Saved (Google Sheets API will be added)");
+    });
+  });
+</script>
+
   </body>
 </html>
