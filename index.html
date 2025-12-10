@@ -193,13 +193,53 @@
     $("#tableHeader").empty();
     cols.forEach((col) => $("#tableHeader").append(`<th>${col}</th>`));
 
-    // Initialize DataTable
-    const table = $("#googleTable").DataTable({
-      data: modifiedRows,
-      columns: cols.map((c) => ({ title: c })),
-      pageLength: 10,
-      responsive: true,
-    });
+       // Initialize DataTable
+      const table = $("#googleTable").DataTable({
+        data: modifiedRows,
+        columns: cols.map((c) => ({ title: c })),
+        pageLength: 10,
+        lengthChange: true,
+        buttons: [
+          {
+            extend: "copy",
+            className: "btn-icon btn-copy",
+            text: '<i class="bi bi-clipboard"></i>',
+            titleAttr: "Copy",
+          },
+          {
+            extend: "csv",
+            className: "btn-icon btn-csv",
+            text: '<i class="bi bi-file-earmark-text"></i>',
+            titleAttr: "CSV",
+          },
+          {
+            extend: "excel",
+            className: "btn-icon btn-excel",
+            text: '<i class="bi bi-file-earmark-excel"></i>',
+            titleAttr: "Excel",
+          },
+          {
+            extend: "pdf",
+            className: "btn-icon btn-pdf",
+            text: '<i class="bi bi-file-earmark-pdf"></i>',
+            titleAttr: "PDF",
+          },
+          {
+            extend: "print",
+            className: "btn-icon btn-print",
+            text: '<i class="bi bi-printer"></i>',
+            titleAttr: "Print",
+          },
+          {
+            extend: "colvis",
+            className: "btn-icon btn-colvis",
+            text: '<i class="bi bi-eye"></i>',
+            titleAttr: "Column Visibility",
+          },
+        ],
+        dom: "<'row mb-3'<'col-sm-4 d-flex align-items-center'l><'col-sm-4 d-flex align-items-center justify-content-center'B><'col-sm-4 d-flex align-items-center justify-content-end'f>>tr<'row mt-3'<'col-sm-5'i><'col-sm-7'p>>",
+        responsive: true,
+      });
 
     // -----------------------------
     // EDIT BUTTON CLICK
