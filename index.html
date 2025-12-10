@@ -253,9 +253,10 @@
 
     console.log(newFollowup);
 
-      // TODO: Google Sheet save API here
-       //$.post("https://script.google.com/macros/s/AKfycby8J8AVZiYe88qXIj74naHFimw090Ixb2AfV8vaxna4Lsl9uRmNHlH22yW8-CRRCjz9/exec", { id: id, followup: newFollowup });
+      // --- SHOW PROCESSING OVERLAY ---
+    $("#processingOverlay").fadeIn(200);
 
+      // TODO: Google Sheet save API here
       $.post(
               "https://script.google.com/macros/s/AKfycby8J8AVZiYe88qXIj74naHFimw090Ixb2AfV8vaxna4Lsl9uRmNHlH22yW8-CRRCjz9/exec",
               JSON.stringify({ id: id, followup: newFollowup }),
@@ -284,5 +285,23 @@
   });
 </script>
 
+<!-- Fullscreen Processing Loader -->
+<div id="processingOverlay" 
+     style="
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.4);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;">
+        
+    <div style="text-align:center; color:white; font-size:20px;">
+        <div class="spinner-border text-light" style="width:3rem; height:3rem;" role="status"></div>
+        <div class="mt-3 fw-bold">Saving...</div>
+    </div>
+</div>
+
+    
   </body>
 </html>
