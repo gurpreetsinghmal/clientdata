@@ -265,12 +265,17 @@
               }
             );
 
-      rowData[rowData.length - 2] = newFollowup;
-      rowData[rowData.length - 1] =
+      // --- UPDATE TABLE VISUALLY ---
+    let rowData = row.data();
+    rowData[rowData.length - 2] = newFollowup;
+
+    rowData[rowData.length - 1] =
         `<button class="btn btn-sm btn-warning editBtn">Edit</button>
          <button class="btn btn-sm btn-success saveBtn d-none">Save</button>`;
 
-      row.data(rowData).draw(false);
+    row.data(rowData).draw(false);
+
+    
     });
   });
 </script>
