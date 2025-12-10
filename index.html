@@ -289,10 +289,14 @@
     const id = row.data()[0];                 // ID = first column
 
     // Read real input value from DOM cell (2nd last column)
-    const newFollowup = tr.find("td").eq(tr.find("td").length - 2).find("input").val();
+    const newFollowup = tr.find("td").eq(tr.find("td").length - 2).find("input").val().trim();
 
 
-    console.log(newFollowup);
+    // CHECK IF EMPTY
+    if (newFollowup === "" || newFollowup.length === 0) {
+        alert("Please enter follow-up before saving!");
+        return;  // STOP save
+    }
 
       // --- SHOW PROCESSING OVERLAY ---
     $("#processingOverlay").fadeIn(200);
