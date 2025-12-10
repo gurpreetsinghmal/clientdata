@@ -179,14 +179,14 @@
     );
 
     // Add Followup + Action buttons
-    cols.push("Followup", "Actions");
+    cols.push("", "Actions Needed");
 
     const modifiedRows = rows.map((r) => {
       return [
         ...r,
         "", // followup blank initially
-        `<button class="btn btn-sm btn-warning editBtn">Edit</button>
-         <button class="btn btn-sm btn-success saveBtn d-none">Save</button>`
+        `<button class="btn btn-sm btn-warning editBtn"><i class="bi bi-pencil-square"></i></button>
+         <button class="btn btn-sm btn-success saveBtn d-none"><i class="bi bi-check-circle-fill"></i></button>`
       ];
     });
 
@@ -255,8 +255,8 @@
         `<input type="text" class="form-control form-control-sm" value="${followupValue}" />`;
 
       rowData[rowData.length - 1] =
-        `<button class="btn btn-sm btn-secondary cancelBtn">Cancel</button>
-         <button class="btn btn-sm btn-success saveBtn">Save</button>`;
+        `<button class="btn btn-sm btn-secondary cancelBtn"><i class="bi bi-x-circle-fill"></i></button>
+         <button class="btn btn-sm btn-success saveBtn"><i class="bi bi-check-circle-fill"></i></button>`;
 
       row.data(rowData).draw(false);
     });
@@ -272,8 +272,8 @@
 
       rowData[rowData.length - 2] = value;
       rowData[rowData.length - 1] =
-        `<button class="btn btn-sm btn-warning editBtn">Edit</button>
-         <button class="btn btn-sm btn-success saveBtn d-none">Save</button>`;
+        `<button class="btn btn-sm btn-warning editBtn"><i class="bi bi-pencil-square"></i></button>
+         <button class="btn btn-sm btn-success saveBtn d-none"><i class="bi bi-check-circle-fill"></i></button>`;
 
       row.data(rowData).draw(false);
     });
@@ -316,8 +316,8 @@
     rowData[rowData.length - 2] = newFollowup;
 
     rowData[rowData.length - 1] =
-        `<button class="btn btn-sm btn-warning editBtn">Edit</button>
-         <button class="btn btn-sm btn-success saveBtn d-none">Save</button>`;
+        `<button class="btn btn-sm btn-warning editBtn"><i class="bi bi-pencil-square"></i></button>
+         <button class="btn btn-sm btn-success saveBtn d-none"><i class="bi bi-check-circle-fill"></i></button>`;
 
     row.data(rowData).draw(false);
 
