@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>Gurpreet Clients</title>
+    <title>Clients</title>
 
     <!-- Bootstrap 5 -->
     <link
@@ -251,13 +251,13 @@
        //$.post("https://script.google.com/macros/s/AKfycby8J8AVZiYe88qXIj74naHFimw090Ixb2AfV8vaxna4Lsl9uRmNHlH22yW8-CRRCjz9/exec", { id: id, followup: newFollowup });
 
       $.post(
-  "https://script.google.com/macros/s/AKfycby8J8AVZiYe88qXIj74naHFimw090Ixb2AfV8vaxna4Lsl9uRmNHlH22yW8-CRRCjz9/exec",
-  JSON.stringify({ id: id, followup: newFollowup }),
-  function (res) {
-    console.log("Saved to Google Sheet", res);
-    alert(res);
-  }
-);
+              "https://script.google.com/macros/s/AKfycby8J8AVZiYe88qXIj74naHFimw090Ixb2AfV8vaxna4Lsl9uRmNHlH22yW8-CRRCjz9/exec",
+              JSON.stringify({ id: id, followup: newFollowup }),
+              function (res) {
+            
+                alert("Saved to Google Sheet");
+              }
+            );
 
       rowData[rowData.length - 2] = newFollowup;
       rowData[rowData.length - 1] =
@@ -265,8 +265,6 @@
          <button class="btn btn-sm btn-success saveBtn d-none">Save</button>`;
 
       row.data(rowData).draw(false);
-
-      alert("Saved (Google Sheets API will be added)");
     });
   });
 </script>
