@@ -136,13 +136,14 @@
     <div class="container py-5">
       <div class="md-card">
         <div class="table-title">Jyoti Dashabord- Client Data</div>
-
+        <div>
         <table id="googleTable" class="table table-hover" width="100%">
           <thead>
             <tr id="tableHeader"></tr>
           </thead>
           <tbody></tbody>
         </table>
+        </div>
       </div>
     </div>
 
@@ -302,7 +303,7 @@
               JSON.stringify({ id: id, followup: newFollowup }),
               function (res) {
             
-                alert("Saved to Google Sheet");
+                alert("Follow Up Saved");
                 // FORCE REFRESH AFTER SAVE
             setTimeout(() => {
                 location.reload();
