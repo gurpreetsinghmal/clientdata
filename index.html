@@ -241,17 +241,17 @@
     // SAVE BUTTON → also send to Google Sheets
     // -----------------------------
     $("#googleTable tbody").on("click", ".saveBtn", function () {
-      const row = table.row($(this).closest("tr"));
-      const rowData = row.data();
+  
+    const tr = $(this).closest("tr");         // real DOM row
+    const row = table.row(tr);                // DataTable row
+
+    const id = row.data()[0];                 // ID = first column
+
+    // Read real input value from DOM cell (2nd last column)
+    const newFollowup = tr.find("td").eq(tr.find("td").length - 2).find("input").val();
 
 
-
-       // Followup value is inside input box → extract it safely
-  const followupInputCell = $(rowData[rowData.length - 2]);   // cell contains <input>
-  const newFollowup = followupInputCell.val();                // extract value
-
-  const id = rowData[0];  // first column = ID
-console.log(newFollowup);
+    console.log(newFollowup);
 
       // TODO: Google Sheet save API here
        //$.post("https://script.google.com/macros/s/AKfycby8J8AVZiYe88qXIj74naHFimw090Ixb2AfV8vaxna4Lsl9uRmNHlH22yW8-CRRCjz9/exec", { id: id, followup: newFollowup });
